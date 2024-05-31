@@ -7,7 +7,7 @@ class Data {
     }
 }
 
-dataCollection = null;
+var dataCollection = null;
 
 function initialize() {
     return new Promise((resolve, reject) => {
@@ -16,8 +16,9 @@ function initialize() {
                 reject('failed to read students.json')
                 return; //return from function
             }
+            //check if JSON is valid
             try {
-                let studentData = JSON.parse(data);
+                var studentData = JSON.parse(data);
             } catch(e) {
                 reject('failed to parse students.json')
                 return; //return from function
@@ -28,8 +29,9 @@ function initialize() {
                     reject('failed to read courses.json')
                     return; //return from function
                 }
+                //check if JSON is valid
                 try {
-                    let coursesData = JSON.parse(data);
+                    var coursesData = JSON.parse(data);
                 } catch(e) {
                     reject('failed to parse students.json')
                     return; //return from function
@@ -43,22 +45,22 @@ function initialize() {
 
 function getAllStudents() {
     return new Promise((resolve, reject) => {
-        if(dataCollection.studentData.length = 0){
+        if(dataCollection.students.length === 0){
             reject('no results returned'); //empty array
             return; //return from function
         }
-        resolve(dataCollection.studentData);
+        resolve(dataCollection.students);
     })
 }
 
 function getTAs() {
     return new Promise((resolve, reject) => {
-        if(dataCollection.students.length = 0){
+        if(dataCollection.students.length === 0){
             reject('no results returned'); //empty array
             return; //return from function
         }
         var res = dataCollection.students.filter((student) => {
-            return student.TA = true; //create a new filtered array
+            return student.TA === true; //create a new filtered array
         })
         resolve(res);
     })
@@ -66,11 +68,11 @@ function getTAs() {
 
 function getCourses() {
     return new Promise((resolve, reject) => {
-        if(dataCollection.courses.length = 0){
+        if(dataCollection.courses.length === 0){
             reject('no results returned'); //empty array
             return; //return from function
         }
-        resolve(dataCollection.coursesData);
+        resolve(dataCollection.courses);
     })
 }
-export {initialize, getAllStudents, getTAs, getCourses};
+module.exports = {initialize, getAllStudents, getTAs, getCourses};
